@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxia Interactiva - Control Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%);
+            display: flex;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #video {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 250px;
+            height: 200px;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            background: #000;
+            transform: scaleX(-1);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .info {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            color: #00ff88;
+            font-size: 16px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+
+        .status {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: #00ff88;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+        }
+
+        .permission-prompt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(10, 10, 26, 0.95);
+            padding: 40px;
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            text-align: center;
+            color: #00ff88;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+        }
+
+        .permission-prompt h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .permission-prompt p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .permission-prompt button {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .permission-prompt button:hover {
+            background: #00dd77;
+            transform: scale(1.05);
+        }
+
+        .hand-info {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="permission-prompt" id="permissionPrompt">
+        <h2>🎥 Permiso de Cámara Requerido</h2>
+        <p>Esta aplicación necesita acceso a tu cámara para detectar el movimiento de tu mano y controlar la galaxia.</p>
+        <button onclick="requestCameraPermission()">Permitir Cámara</button>
+        <button onclick="startWithoutCamera()">Continuar sin Cámara</button>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <video id="video" playsinline></video>
+    
+    <div class="status" id="status">Inicializando...</div>
+    <div class="hand-info" id="handInfo"></div>
+    <div class="info">
+        <div id="infoText">
+            🌌 GALAXIA INTERACTIVA<br>
+            Abre y cierra tu mano para controlar<br>
+            Apertura: Expande | Cierre: Comprime<br>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
